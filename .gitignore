@@ -1,0 +1,38 @@
+# Виртуальное окружение
+venv_vk_bot/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Файлы конфигурации и переменные окружения
+.env
+*.env
+
+# Логи
+*.log
+
+# Временные файлы
+*.tmp
+
+# IDE/редакторские файлы (примеры)
+.vscode/
+.idea/
+*.swp
+
+# macOS специфичные файлы 
+.DS_Store 
+
+
+
+database/my_database.db
+database/test.db
+database/app_data.db
+database/users.db
+database/temp_cache.db
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+# database/db_manager.py
+
+import sqlite3
+
+DATABASE_NAME = 'quotes.db' # Теперь этот путь правильный, т.к. quotes.db лежит в корне
+
+def setup_database():
+    """Создает базу данных и таблицу quotes, если они не существуют,
+       и добавляет цитаты, если таблица пуста."""
+    conn = None
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS quotes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                quote TEXT NOT NULL UNIQUE
+            )
+        ''')
+        # Добавляем UNIQUE к quote, чтобы избежать дублей
+
+        cursor.execute('SELECT COUNT(*) FROM quotes')
+        count = cursor.fetchone()[0]
+
+        if count == 0:
+            print("База данных пуста, добавляю начальные цитаты...")
+            # Здесь я добавил пару новых цитат по теме
+            quotes_to_add = [
+                ("Жизнь — это 10% того, что с тобой происходит, и 90% того, как ты на это реагируешь.",),
+                ("Не позволяйте стрессу определять вас. Вы сильнее, чем думаете.",),
+                ("Тревожность — это просто напоминание о том, что вы заботитесь. Используйте эту энергию.",),
+                ("Каждый новый день — это шанс начать заново и найти спокойствие.",),
+                ("Ваше дыхание — ваш якорь в бушующем море тревоги.",),
+                ("Маленькие шаги к спокойствию ведут к большим переменам.",),
+                ("Вы не одиноки в своей борьбе. Ищите поддержку и помните о своих сильных сторонах.",),
+                ("Стресс — это реакция, а не приговор. Учитесь управлять своей реакцией.",),
+                ("Позвольте себе чувствовать, но не позволяйте чувствам управлять вами.",),
+                ("Забота о себе — это не эгоизм, а необходимость для преодоления трудностей." ),
+                ("Даже в самые темные времена всегда есть луч надежды. Ищи его.",),
+                ("Сосредоточься на том, что ты можешь контролировать, и отпусти то, что не можешь.",)
+            ]
+            cursor.executemany('INSERT INTO quotes (quote) VALUES (?)', quotes_to_add)
+            conn.commit()
+            print(f"Добавлено {len(quotes_to_add)} цитат.")
+        else:
+            print(f"В базе данных '{DATABASE_NAME}' уже есть {count} цитат.")
+
+    except sqlite3.Error as e:
+        print(f"Ошибка SQLite в setup_database: {e}")
+    finally:
+        if conn:
+            conn.close()
+            # print("Соединение с базой данных (setup_database) закрыто.") # Можно убрать, чтобы не засорять вывод
+
+def get_random_quote():
+    """Возвращает одну случайную цитату из базы данных."""
+    conn = None
+    quote = "Не могу найти цитату. Попробуйте позже."
+    try:
+        conn = sqlite3.connect(DATABASE_NAME)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT quote FROM quotes ORDER BY RANDOM() LIMIT 1") 
+
+        result = cursor.fetchone()
+
+        if result:
+            quote = result[0]
+
+    except sqlite3.Error as e:
+        print(f"Ошибка SQLite в get_random_quote: {e}")
+    finally:
+        if conn:
+            conn.close()
+    return quote
+
