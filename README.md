@@ -101,7 +101,9 @@ PDF‑гайд **«Код спокойствия: Практики для IT‑�
 **Никита Ksf**
 
 - VK: https://vk.com/algorithmicmind
-- Telegram: @Nikita_StressSolutionist
+- VK- Сообщество Код спокойствия | Психология для IT - 
+(https://vk.com/my_zen1)
+-  Telegram: @Nikita_StressSolutionist
 - Habr Career: https://career.habr.com/nikita12391
 - GitHub: https://github.com/NikitaKsf
 
