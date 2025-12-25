@@ -75,8 +75,11 @@ PRODUCT_LINK=[https://vk.com/market-XXXXXXX?w=product-XXXXXXX_YYYYYYY](https://v
 
 ### 5. Запуск бота
 bash
+export VK_TOKEN=ваш_секретный_токен_группы
 
-python main.py
+export VK_GROUP_ID=ID_вашего_сообщества
+python3 bot.py 
+
 
 Бот подключится к Long Poll серверу VK и начнёт обрабатывать входящие сообщения.
 
